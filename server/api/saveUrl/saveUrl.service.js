@@ -1,27 +1,40 @@
-import { getUrlCollection } from "../../loader/collections";
-import shortyCode from "../../middleware/redirectedGenerator";
+import { getUrlCollection } from "../../loader/collections.js";
+import shortyCode from "../../middleware/redirectedGenerator.js";
+import config from "../../config/config.js";
+export const handleCreateUrl = async (req, res) => {
+  try {
+    // Use validated data from middleware
+    const { mainUrl } = req.validatedData;
 
-export const handleCreateUrl = async (url) => {
     const collection = await getUrlCollection();
-    
-    let shortCode = shortyCode();
-    let exists = await collection.findOne({shortCode});
-    while(exists){
-        shortCode = shortCode();
-        exists = await collection.findOne({shortCode})
+
+    // Generate shortCode if not provided
+    let shortCode = '4z5bRq';
+
+    // Ensure unique shortCode
+    let exists = await collection.findOne({ shortCode });
+    while(exists) {
+      shortCode = '4z5bRq';
+      exists = await collection.findOne({ shortCode });
+      throw new Error('Short Code already exists')
     }
 
     const newEntry = {
-        originalUrl: url,
-        shortCode,
-        createdAt: new Date(),
+      originalUrl: mainUrl,
+      shortCode: shortCode,
+      createdAt: new Date(),
     };
+    console.log(newEntry)
 
     await collection.insertOne(newEntry);
 
-    return {
-        success: true,
-        shortUrl: `${process.env.BASE_URL}/${shortCode}`,
-        data: newEntry,
-    };
+    res.json({
+      success: true,
+      shortUrl: `${config.base_url}/${shortCode}`,
+      data: newEntry,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 };

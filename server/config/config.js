@@ -14,6 +14,7 @@ const evnSchema = Joi.object()
         NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
         PORT: Joi.number().default(3000),
         MONGODB_URL: Joi.string().required().description('Mongo DB url'),
+        BASE_URL: Joi.string().required().uri().description('Base url'),
         
     }).unknown();
 
@@ -28,6 +29,7 @@ const config = {
         env: envVars.NODE_ENV,
         port: envVars.PORT,
         mongodb_url: envVars.MONGODB_URL,
+        base_url: envVars.BASE_URL,
 }
 
 export default config;

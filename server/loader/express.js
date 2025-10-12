@@ -3,7 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
 import ExpressMongoSanitize from 'express-mongo-sanitize'
-
+import routes from '../api/saveUrl/saveUrl.router.js'
 
 
 export default ({app}) =>{
@@ -26,6 +26,7 @@ export default ({app}) =>{
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true}));
+    app.use('/api', routes())
     //app.use(ExpressMongoSanitize());
 
 }

@@ -1,10 +1,11 @@
-import express from "express";
-import { handleCreateUrl } from "./saveUrl.service";
-import { validateRequest } from "../../utils/validator";
-import { urlSaveSchema } from "./saveUrl.schema";
+import {Router} from "express";
+import { handleCreateUrl } from "./saveUrl.service.js";
+import { validateRequest } from "../../utils/validator.js";
+import { urlSaveSchema } from "./saveUrl.schema.js";
 
-const router = express.Router();
+export default () => {
+    const app = Router();
 
-router.post("/shorten", validateRequest(urlSaveSchema), handleCreateUrl)
-
-export default router; 
+    app.post('/shorten', validateRequest(urlSaveSchema), handleCreateUrl)
+    return app;
+}
