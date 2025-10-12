@@ -1,0 +1,44 @@
+{
+  "name": "shorty",
+  "version": "1.0.0",
+  "description": "backend cum rest api for a no login url shortener",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "pm2 start ecosystem.config.json --no-daemon",
+    "dev": "NODE_ENV=development nodemon src/index.js",
+    "test": "jest -i --colors --verbose --detectOpenHandles",
+    "test:watch": "jest -i --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanskarOH/shorty.git"
+  },
+  "keywords": [
+    "url-shortner",
+    "api",
+    "REST",
+    "backend"
+  ],
+  "author": "sanskarOH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanskarOH/shorty/issues"
+  },
+  "homepage": "https://github.com/sanskarOH/shorty#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
+    "mongodb": "^6.20.0",
+    "morgan": "^1.10.1",
+    "nanoid": "^5.1.6",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
