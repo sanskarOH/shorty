@@ -3,7 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
 import ExpressMongoSanitize from 'express-mongo-sanitize'
-import routes from '../api/saveUrl/saveUrl.router.js'
+import routes from '../api/index.js'
 
 
 export default ({app}) =>{
