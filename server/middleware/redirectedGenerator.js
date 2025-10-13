@@ -4,6 +4,7 @@ const shortyCode = () => {
 
     try{
         const shCode = nanoid(6);
+        console.log('shortcode generate', shCode)
         return shCode;
 
     }catch(err){

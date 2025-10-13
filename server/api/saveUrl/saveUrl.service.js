@@ -1,22 +1,31 @@
 import { getUrlCollection } from "../../loader/collections.js";
 import shortyCode from "../../middleware/redirectedGenerator.js";
 import config from "../../config/config.js";
+
+
 export const handleCreateUrl = async (req, res) => {
   try {
-    // Use validated data from middleware
-    const { mainUrl } = req.validatedData;
-
+   
+    const mainUrl  = req.validatedData;
     const collection = await getUrlCollection();
+    console.log(mainUrl)
+    let urlExists = await collection.findOne({originalUrl:mainUrl});
+    console.log(urlExists)
+    if(urlExists!=null){
+        res.status(400).json({
+            success: false,
+            message: "Url shortcode already exists",
+            shortendUrl: `${config.base_url}/${urlExists.shortCode}`
+        })
+    }
+    
+    let shortCode = shortyCode();
 
-    // Generate shortCode if not provided
-    let shortCode = '4z5bRq';
 
-    // Ensure unique shortCode
-    let exists = await collection.findOne({ shortCode });
-    while(exists) {
-      shortCode = '4z5bRq';
+    let shortCodeExists = await collection.findOne({ shortCode });
+    while(shortCodeExists) {
+      shortCode = shortyCode();
       exists = await collection.findOne({ shortCode });
-      throw new Error('Short Code already exists')
     }
 
     const newEntry = {
