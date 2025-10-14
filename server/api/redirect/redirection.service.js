@@ -1,5 +1,5 @@
 import { getUrlCollection } from "../../loader/collections.js";
-
+import redirection from '../../middleware/siteOpen.js'
 export const redirectionHandler = async(req, res) => {
     
     try{
@@ -12,11 +12,8 @@ export const redirectionHandler = async(req, res) => {
 
         if(exists){
             const mainUrl = exists.originalUrl;
-            return res.status(200).json({
-                success: true,
-                message: 'URl was found',
-                url: mainUrl
-            })
+            console.log(mainUrl)
+            return res.redirect(exists.originalUrl.mainUrl)
             
         }else{
             return res.status(404).json({
