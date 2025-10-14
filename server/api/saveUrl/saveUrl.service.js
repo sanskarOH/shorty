@@ -39,7 +39,7 @@ export const handleCreateUrl = async (req, res) => {
 
     res.json({
       success: true,
-      shortUrl: `${config.base_url}/${shortCode}`,
+      shortUrl: `${config.base_url}/api/${shortCode}`,
       data: newEntry,
     });
   } catch (err) {
