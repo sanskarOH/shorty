@@ -1,18 +1,21 @@
 import express from 'express';
 import config from './config/config.js';
 import Loader from './loader/index.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 let server;
 async function start() {
     const app = express();
     await Loader({app});
-    app.get('/',(_req,res)=>{
-        res.status(200).json({message: {
-            status: 200,
-            message: 'The server is up and running'
-
-        }})
-    });
+    const frontendPath = path.join(__dirname, "public")
+    
+    app.use(express.static(frontendPath));
+    app.get('/', (_req, res)=> {
+        res.sendFile(path.join(frontendPath, "index.html"))
+    })
 
     server = app
             .listen(config.port, () => {
