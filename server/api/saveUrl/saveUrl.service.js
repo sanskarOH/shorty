@@ -15,7 +15,7 @@ export const handleCreateUrl = async (req, res) => {
         res.status(400).json({
             success: false,
             message: "Url shortcode already exists",
-            shortendUrl: `${config.base_url}/${urlExists.shortCode}`
+            shortendUrl: `${config.base_url}/api/${urlExists.shortCode}`
         })
     }
     
